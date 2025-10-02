@@ -1,0 +1,101 @@
+Binome: Abdullah NEZAMI & Jean GIESE
+Groupe: TP5
+Projet: SAÉ 13.2 2024 - Mini-projet assembleur
+
+INTRODUCTION:
+Aujourd'hui nous allons vous présenter en détail notre rapport sur le projet en assembleur de la SAE 13.2 2024. Ce rapport comprendra la manière dont nous avons procédé pour implémenter les fonctionnalités demandées et supplémentaires afin de venir à bout de ce projet, ainsi que la répartition des tâches, qui a fait quoi et pour finaliser les difficultés rencontrées lors de ce projet.
+
+1) RÉPARTITION DES TÂCHES:
+Une répartition équilibrée des tâches a été mise en place :
+- Abdullah s'est chargé des fonctions suivantes :
+  - loadFile
+  - parseValues
+  - closeFile
+  - displaySudoku
+  - check_n_column
+  - check_n_square
+  - check_columns
+  - check_squares
+  - check_sudoku
+
+- Jean s'est chargé des fonctions suivantes :
+  - zeroToSpace
+  - check_n_row
+  - check_rows
+  - solve_sudoku
+  - autres_solutions
+
+Tout au long de notre projet, nous avons collaboré étroitement en nous soutenant mutuellement lors des moments de doute ou face à des obstacles, chacun intervenant pour aider l'autre. Nous avons également échangé des ressources et des informations avec d'autres binômes, ce qui a enrichi notre compréhension. Pour faciliter notre travail, nous avons utilisé Google Docs pour partager des documents et des notes en temps réel, ainsi que des messages téléphoniques pour coordonner nos tâches. Nous avons fixé des deadlines claires pour organiser qui faisait quoi et quand, et nous avons régulièrement regroupé notre code, en l'échangeant et en le téléchargeant pour déboguer et améliorer ensemble. Nous nous retrouvions souvent à la bibliothèque pour évaluer nos progrès, identifier les points à approfondir, nous entraider et maintenir un rythme de travail équivalent
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+2) FONCTIONNALITÉS DEMANDÉES ET SUPPLÉMENTAIRES:
+
+1. loadFile  
+	La fonction loadFile ouvre un fichier spécifié en mode lecture(0) et renvoie un descripteur de fichier. Elle utilise un appel système pour effectuer cette opération. Cette fonction charge l'adresse du fichier dans $a0 et spécifie le mode de lecture (0) dans $a1. Ensuite, elle utilise l'appel système 13 pour ouvrir le fichier et renvoie le descripteur dans $v0. Le descripteur de fichier est utilisé pour d'autres opérations, telles que la lecture ou la fermeture
+
+2. parseValues
+	La fonction parseValues ??extrait les valeurs d'un fichier(nomFichier) Sudoku en lisant son contenu dans une grille. Cette fonction utilise le descripteur de fichier précédemment obtenu pour lire 81 octets (les valeurs du Sudoku). Elle charge l'adresse de la grille dans $a1, définit le nombre d'octets à lire dans $a2 et utilise l'appel système 14 pour effectuer la lecture. Les données lues sont stockées dans la grille. Les valeurs du fichier sont transférées en mémoire dans une zone appelée la grille.
+
+3. closeFile 
+	La fonction closeFile ferme un fichier ouvert en libérant son descripteur de fichier. Elle déplace le descripteur de fichier vers $a0 et utilise l'appel système 16 pour fermer le fichier. Cela libère les ressources associées au fichier. Le fichier est fermé et le descripteur de fichier n'est plus utilisable.
+
+4. check_n_column 
+	La fonction check_n_column prend en paramètre la n-ième colonne et vérifie la grille à l'aide d'une pile et d'une boucle. La fonction réserve un espace dans la pile pour 9 entiers et, dans la boucle, prend les 9 valeurs de la colonne pour les mettre dans la pile. Si une valeur est déjà dans la pile (si elle est la même), la fonction renvoie faux (-1). Sinon, elle renvoie vrai (1).
+
+5. check_n_row
+	La fonction check_n_row va vérifier la n-ième ligne prise en paramètre en utilisant deux grilles et deux boucles et va donc avoir la grille en paramètre. Elle va prendre la première valeur à l'aide de la première grille et la comparer à toutes les autres valeurs de la ligne à l'aide de la deuxième grille. Puis va prendre la deuxième valeur et répéter le processus 9 fois.
+
+6. check_n_square
+	La fonction check_n_square vérifie le n-ième carré dans la grille. Tout d'abord, elle calcule où commencer à l'aide de la formule suivante : 3 × (n % 3) + 27 × (n / 3), où n est le numéro du carré. Une fois dans le carré, elle examine les nombres qu'il contient et vérifie si ces nombres sont déjà dans une pile qui était réserve au début de la fonction. il vérifie d'abord si le numéro est sur la pile à un endroit précis ou non, sinon nous ajoutons s'il est déjà là, cela signifie qu'il est double, il renverra donc -1
+ 
+7. check_columns
+	Cette fonction appellera check_n_column 9 fois en utilisant une boucle, en lui passant en paramètre un compteur qui sera incrémenté à chaque tour de boucle, celui-ci démarre de 0 à 8 vérifiant ainsi toutes les colonnes de la grille, tout en vérifiant que la fonction check_n_column renvoie 1 ou -1.
+
+8. check_rows
+	Cette fonction appellera check_n_row 9 fois en utilisant une boucle, en lui passant en paramètre un compteur qui sera incrémenté à chaque tour de boucle, celui-ci démarre de 0 à 8 vérifiant ainsi toutes les lignes de la grille, tout en vérifiant que la fonction  check_n_row renvoie 1 ou -1.
+
+9. check_squares
+	Cette fonction appellera check_n_square 9 fois en utilisant une boucle, en lui passant en paramètre un compteur qui sera incrémenté à chaque tour de boucle, celui-ci démarre de 0 à 8 vérifiant ainsi toutes les squares de la grille, tout en vérifiant que la fonction check_n_square renvoie 1 ou -1.
+
+10. check_sudoku
+Check_sudoku va appeler les 3 fonctions check_rows, check_columns et check_squares et va à chaque fois vérifier si le résultat et vrai ou faux. Puis va renvoyer vrai(1) ou faux(-1) en fonction du résultat.
+
+11. solve_sudoku
+	La fonction solve_sudoku prend en paramètre la grille du sudoku et la résout. Pour ce faire, elle commence par trouver la première case vide à l'aide d'une boucle. S'il n'y a aucune case vide, elle affiche la grille et retourne vrai, car le sudoku est déjà résolu. Sinon, elle identifie la ligne et la colonne de la case vide à l'aide d'un index incrémenté dans la boucle. Elle lance ensuite une boucle sur les chiffres de 1 à 9, plaçant chaque chiffre dans la grille à la ligne et la colonne trouvées. Elle vérifie le chiffre en appelant la fonction check_sudoku. Si cette dernière renvoie vrai, elle effectue un appel récursif à solve_sudoku pour vérifier les autres cases vides. Sinon, elle retire le chiffre et teste le suivant. Si aucun chiffre n'est valide, elle retourne faux.
+
+Pour les fonctionnalités supplémentaires (bonus), nous avons :
+  - zeroToSpace, qui convertit les 0 (cases vides) en espaces.
+  - displaySudoku, qui affiche le sudoku de façon propre.
+  - autres_solutions, qui voit si le sudoku n'a pas d'autres solutions
+
+12. zeroToSpace
+	Cette fonction effectue une boucle qui tourne 81 fois  et vérifie toutes les valeurs du sudoku. Si une valeur est égale à 0, elle la transforme en 32 (espace en ASCII).
+
+13. displaySudoku
+	La fonction displaySudoku effectue une boucle qui vérifie chaque chiffre de la grille du sudoku. Si c'est un espace (32 en ASCII), elle affiche un espace. Sinon, elle affiche le chiffre. Lorsqu'elle arrive à la neuvième colonne, elle effectue un retour à la ligne (si l'index modulo 9 == 0).
+
+14. autres_solutions
+	La fonction autres_solutions commence par réinitialiser la grille pour tester d'autres valeurs. Elle stock dans un registre compteur_solutions le nombre de solutions que l'on peut encore trouvé et l'utilise pour faire une boucle. Dans celle-ci on incrémentera $a3 qui servira à réinitialiser « compteur » pour avancer dans la bonne case mémoire de l'adresse « solutions » qui contient toutes les solutions trouvées (le chiffre actuel de 1 à 9 dans solve_sudoku).
+	
+-------------------------------------------------------------------------------------------------------------------------------
+
+LES DIFFICULTÉS RENCONTRÉES:
+  1. Difficulté de démarrage
+  	Le première difficulté que nous avons eu était comment répartir les tâches car ce projet de codage était quelque chose de tres nouveau pour nous. Nous navions jamais coder dans assembly language et nous avons eu un grand projet a faire, mais tout de même après quelques heures à étudier bien ce projet et développer nos connaissances nous étions prêt pour finaliser la répatition de nos tâches. 
+
+  2. Gestion de la pile (Abdullah)
+  	La deuxième difficulté que j'ai rencontrée concernait l'utilisation de la pile. J'utilisais une pile pour stocker les valeurs et les comparer afin de valider la grille. Pour chaque nombre de la grille, je le comparais aux valeurs déjà présentes dans la pile : si une valeur était identique, je retournais -1 (faux), sinon 1 (vrai). Le problème est apparu à la fin de la boucle dans check_n_square ou check_n_column, où je libérais la pile avec add $sp, $sp, 36. Cela fonctionnait initialement, mais lorsque j'ai appelé ces fonctions pour valider toute la grille check_squares ou check_columns, des erreurs survenaient, même si la grille était correcte.
+	Après analyse, j'ai compris que le problème venait du fait que add $sp, $sp, 36 ajustait uniquement le pointeur de pile ($sp), sans supprimer les valeurs déjà présentes. Ainsi, lors des appels successifs, les anciennes valeurs restaient sur la pile, causant des conflits. J'ai corrigé cela en libérant correctement la pile à la fin comme sw $zero, 0($sp) jusqu'au 36eme. Une fois le problème compris, j'ai réalisé l'importance de gérer correctement la pile dans chaque fonction. Cette expérience m'a permis de mieux comprendre le fonctionnement du code et le rôle crucial de la pile dans l'exécution des programmes et j'ai appris trop de chose avec ça.
+
+  3. Difficulté de réflexion (Jean)
+	La troisième difficulté que j'ai découvert est la réflexion à avoir pour trouver le code qui fonctionne. En effet, comme dit plus tôt, la première difficulté était savoir comment coder étant donné que le langage assembleur était nouveau pour nous, cependant dans la deuxième partie du projet le problème ne venait plus d'ici, au contraire. 
+Le problème venait de ma réflexion, je savais coder, si on me donner une idée à coder, je l'a codé sans trop de soucis. Le problème était que je n'arrivait pas à trouvée l'idée. Notamment pour la fonction autres_solutions, par exemple au début, je suis parti sur l'idée de créer une nouvelle fonction copie_grille qui copier une grille initiale pour la mettre dans une autre. Je me disais que c'était une bonne solution pour réinitialiser une grille et je l'ai donc créé. Cependant j'ai du effacé cette fonction car les fonctions loadfile, parseValues et closeFile pouvaient déjà réinitialiser la grille et qu'en plus la fonction faisait des petits bugs sur d'autres fonction qui pouvaient potentiellement faire bugger le tout. De même pour check_n_row, je pars sur une idée initialement mais je me rends compte très vite que cette idée va générer des problèmes.
+Mais en testant différentes tentatives j'ai finalement réussi à arriver à mes fins en apprenant de mes erreurs.
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+CONCLUSION:
+	Pour conclure, nous avons implémenté toutes les fonctionnalités demandées ainsi que des fonctionnalités supplémentaires. 
+Malgré des débuts difficiles et quelques problèmes techniques, notre collaboration efficace nous a permis de mener ce projet à terme, tout en apprenant énormément sur le langage assembleur.
+

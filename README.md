@@ -12,8 +12,8 @@ Tout le design et le code ont été réalisés par notre équipe.
 ## Installation
 1. Cloner le dépôt :
 
-   ```bash
-   git clone <URL_DU_DEPOT>
+```bash
+git clone https://github.com/<Votre-utilisateur>/MIPS-Sudoku.git
 ````
 
 2. Ouvrir le fichier `.asm` dans SPIM ou MARS.

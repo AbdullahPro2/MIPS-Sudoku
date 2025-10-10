@@ -2,8 +2,8 @@
 
 ## Description
 Projet tutoré réalisé en binôme sur **5 semaines**.  
-Un solveur de Sudoku en MIPS capable de vérifier la validité des grilles et de résoudre automatiquement les puzzles.  
-Tout le design et le code ont été réalisés par notre équipe.
+Ce Sudoku Solver en MIPS32 nous a permis de renforcer nos compétences en programmation bas niveau et de comprendre comment le code s’exécute sur la machine.  
+Le projet vérifie automatiquement la validité des grilles et résout les puzzles. L’ensemble du design et du code a été entièrement développé par notre équipe.
 
 ## Tech Stack
 - **Langage :** MIPS Assembly  

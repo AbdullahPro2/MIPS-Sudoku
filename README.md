@@ -1,6 +1,4 @@
 # Sudoku Solver
-
-![sudoku-768x512](https://github.com/user-attachments/assets/69f1e7b0-e509-42af-b70e-697e99dc7db5)
 <p align="center">
   <img src="https://github.com/user-attachments/assets/2511298a-8bce-4793-a58e-ad1d24730a01" alt="Image" />
 </p>

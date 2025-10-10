@@ -1,18 +1,27 @@
-# MIPS-Sudoku
+# Sudoku Solver
 
-Jeu Sudoku interactif implémenté en assembleur MIPS32. Ce projet permet de :
+## Description
+Projet tutoré réalisé en binôme sur **5 semaines**.  
+Un solveur de Sudoku en MIPS capable de vérifier la validité des grilles et de résoudre automatiquement les puzzles.  
+Tout le design et le code ont été réalisés par notre équipe.
 
-- Jouer au Sudoku via la console.
-- Apprendre la gestion des registres et de la mémoire en MIPS32.
-- Comprendre le fonctionnement des instructions assembleur pour créer un programme interactif.
+## Tech Stack
+- **Langage :** MIPS Assembly  
+- **Simulateur :** SPIM / MARS  
 
-## Technologies
-
-- Assembleur MIPS32
-- MARS / QtSPIM (pour l’exécution et le test)
-
-## Installation & Exécution
-
+## Installation
 1. Cloner le dépôt :
-```bash
-git clone https://github.com/ton-utilisateur/MIPS-Sudoku.git
+
+   ```bash
+   git clone <URL_DU_DEPOT>
+````
+
+2. Ouvrir le fichier `.asm` dans SPIM ou MARS.
+3. Exécuter le programme directement depuis le simulateur.
+
+## Fonctionnalités
+
+* Vérification des lignes, colonnes et carrés 3x3.
+* Résolution automatique des grilles incomplètes.
+* Gestion des erreurs et affichage des conflits.
+* Affichage de la grille avant et après résolution.
